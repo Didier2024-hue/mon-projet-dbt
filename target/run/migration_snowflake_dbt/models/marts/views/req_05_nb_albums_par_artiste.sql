@@ -1,0 +1,17 @@
+
+  create or replace   view MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.v_albums_par_artiste
+  
+  
+  
+  
+  as (
+    
+
+SELECT 
+    ar.ARTIST_NAME, 
+    COUNT(*) AS NB_ALBUMS
+FROM MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.dim_album a
+JOIN MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.dim_artist ar ON a.ARTIST_ID = ar.ARTIST_ID
+GROUP BY ar.ARTIST_NAME
+  );
+

@@ -1,0 +1,18 @@
+{{ config(
+    schema='star_dbt_schema',
+    tags=['star_schema']
+) }}
+
+SELECT
+    t.TrackId AS track_id,
+    t.AlbumId,
+    t.MediaTypeId,
+    t.GenreId,
+    t.Name AS track_name,
+    t.Composer,
+    t.Milliseconds AS duration_ms,
+    t.Bytes AS size_bytes,
+    t.UnitPrice,
+    DATE('2000-01-01') AS release_date, 
+    CURRENT_TIMESTAMP() AS loaded_at
+FROM {{ source('music_source', 'TRACK') }} t

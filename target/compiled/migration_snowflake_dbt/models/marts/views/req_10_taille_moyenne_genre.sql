@@ -1,0 +1,8 @@
+
+
+SELECT 
+    g.GENRE_NAME, 
+    ROUND(AVG(t.SIZE_BYTES)/1024, 2) AS TAILLE_KO
+FROM MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.fact_tracks t
+JOIN MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.dim_genre g ON t.GENRE_ID = g.GENRE_ID
+GROUP BY g.GENRE_NAME

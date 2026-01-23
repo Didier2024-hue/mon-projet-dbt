@@ -1,0 +1,84 @@
+Objet : Compte-rendu technique - Examen dbt interrompu
+
+Contexte :
+Lors de la phase finale de l'examen dédiée à l'implémentation des vues analytiques via dbt, mon environnement Snowflake a été désactivé de manière imprévue suite à l'expiration de mon compte trial. Voici le bilan détaillé de l'avancement au moment de l'interruption.
+
+Travail réalisé avec succès :
+
+Extraction des données sources depuis DST_DB (complète et validée)
+
+Génération du schéma en étoile, incluant :
+
+Toutes les tables de dimension (dim_album, dim_artist, etc.)
+
+Les tables de fait (fact_tracks, fact_playlist_tracks)
+
+Alimentation des données transformées dans le schéma cible (MUSIC_DWH.STAR_DBT_SCHEMA)
+
+Implémentation partielle des vues analytiques :
+
+v_albums_plus_1cd (albums avec +20 pistes)
+
+v_tracks_2000_2002 (morceaux des années 2000-2002)
+
+v_tracks_rock_jazz (morceaux de Rock/Jazz)
+
+Problèmes rencontrés :
+
+8 vues non finalisées (requêtes 3 à 11) en raison d'erreurs de jointure, par exemple :
+
+invalid identifier 'T.GENRE_ID' (problème de nommage de colonne)
+
+Interruption soudaine lors du débogage, empêchant la résolution complète.
+
+Preuves jointes :
+
+Fichiers SQL des 3 vues opérationnelles
+
+Logs d'erreur des vues en cours de développement
+
+Captures d'écran de la notification d'expiration Snowflake
+
+Demande :
+En raison de ces contraintes techniques indépendantes de ma volonté, je sollicite :
+
+Une évaluation partielle basée sur les parties fonctionnelles (points 1 à 3).
+
+Une validation des éléments livrables, incluant :
+
+La structure complète du schéma en étoile
+
+Procédure d'exécution du projet :
+
+Extraction des données sources :
+
+bash
+dbt run --target dev_source_data --select source:*  
+Charge les tables brutes depuis DST_DB vers l'environnement de staging.
+
+Construction du schéma en étoile :
+
+bash
+dbt clean && dbt run --full-refresh --target dev_star_schema  
+Reconstruit les tables dans MUSIC_DWH.STAR_DBT_SCHEMA.
+
+Fichiers concernés :
+
+Dimensions : models/marts/dimensions/
+
+Faits : models/marts/facts/
+
+Génération des vues :
+
+bash
+dbt run --select marts.views.* --target dev_star_schema  
+Exécute uniquement les vues analytiques.
+
+Remarque :
+L'archive du projet (exam_dbt_JOSEPHINE.tar) inclut l'ensemble du code et des configurations nécessaires pour reproduire l'environnement. Les commandes fournies garantissent une exécution isolée et contrôlée.
+
+Pièces jointes :
+
+Archive du projet (fichiers SQL, logs, screenshots)
+
+Documentation technique des vues implémentées

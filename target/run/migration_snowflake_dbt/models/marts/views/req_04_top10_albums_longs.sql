@@ -1,0 +1,19 @@
+
+  create or replace   view MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.v_top10_albums_long
+  
+  
+  
+  
+  as (
+    
+
+SELECT 
+    a.ALBUM_TITLE, 
+    SUM(t.DURATION_MS)/60000 AS DUREE_MINUTES
+FROM MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.fact_tracks t
+JOIN MUSIC_DWH.STAR_DBT_SCHEMA_star_dbt_schema.dim_album a ON t.ALBUM_ID = a.ALBUM_ID
+GROUP BY a.ALBUM_TITLE
+ORDER BY DUREE_MINUTES DESC
+LIMIT 10
+  );
+

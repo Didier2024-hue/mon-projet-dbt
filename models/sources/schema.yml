@@ -1,0 +1,93 @@
+version: 2
+
+sources:
+  - name: music_source
+    description: "Données sources brutes dans DST_DB.PUBLIC"
+    database: DST_DB
+    schema: PUBLIC
+    tags: ['init']  
+    
+    tables:
+      - name: ARTIST
+        description: "Table des artistes avec informations biographiques"
+        columns:
+          - name: ARTISTID
+            description: "Clé primaire de l'artiste"
+            tests:
+              - not_null
+              - unique
+          - name: NAME
+            description: "Nom de l'artiste"
+          - name: COUNTRY
+            description: "Pays d'origine"
+
+      - name: ALBUM
+        description: "Albums musicaux liés aux artistes"
+        columns:
+          - name: ALBUMID
+            tests:
+              - not_null
+              - unique
+          - name: ARTISTID
+            tests:
+              - relationships:
+                  to: source('music_source', 'ARTIST')
+                  field: ARTISTID
+                  severity: warn
+
+      - name: TRACK
+        description: "Pistes musicales avec métadonnées"
+        columns:
+          - name: TRACKID
+            tests:
+              - not_null
+          - name: ALBUMID
+            tests:
+              - relationships:
+                  to: source('music_source', 'ALBUM')
+                  field: ALBUMID
+          - name: GENREID
+            tests:
+              - relationships:
+                  to: source('music_source', 'GENRE')
+                  field: GENREID
+
+      - name: GENRE
+        description: "Classification des genres musicaux"
+        columns:
+          - name: GENREID
+            tests:
+              - not_null
+              - unique
+          - name: NAME
+            description: "Nom du genre (Rock, Jazz...)"
+
+      - name: MEDIATYPE
+        description: "Format de média (MP3, Vinyle...)"
+        columns:
+          - name: MEDIATYPEID
+            tests:
+              - not_null
+              - unique
+
+      - name: PLAYLIST
+        description: "Listes de lecture créées par les utilisateurs"
+        columns:
+          - name: PLAYLISTID
+            tests:
+              - not_null
+              - unique
+
+      - name: PLAYLISTTRACK
+        description: "Table de liaison entre playlists et pistes"
+        columns:
+          - name: PLAYLISTID
+            tests:
+              - relationships:
+                  to: source('music_source', 'PLAYLIST')
+                  field: PLAYLISTID
+          - name: TRACKID
+            tests:
+              - relationships:
+                  to: source('music_source', 'TRACK')
+                  field: TRACKID

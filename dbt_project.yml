@@ -1,0 +1,32 @@
+name: 'migration_snowflake_dbt'
+version: '1.0.0'
+config-version: 2
+
+profile: 'migration_snowflake_dbt'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  migration_snowflake_dbt:
+    staging:
+      schema: staging
+      materialized: view
+      tags: ['init']
+
+    marts:
+      schema: star_dbt_schema
+      materialized: table
+      tags: ["star_schema"]
+
+      views:
+        +materialized: view  
+        +tags: ["reporting"]  
