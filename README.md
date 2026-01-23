@@ -2,62 +2,57 @@
 
 DataScientest | Data Engineer / Data Architect
 
-🎯 Contexte & objectif
+🎯 Context & Objective
 
-Ce projet consiste à migrer l’examen Snowflake (SQL) vers un workflow dbt, en appliquant les bonnes pratiques de modélisation, d’orchestration et de documentation.
-L’objectif est de démontrer une capacité à industrialiser un pipeline analytique Snowflake dans un cadre dbt.
+This project consists of migrating a Snowflake SQL exam into a dbt workflow, applying best practices for modeling, orchestration, and documentation. The objective is to demonstrate the ability to industrialize a Snowflake analytical pipeline within a dbt framework.
 
-Le projet couvre :
+The project covers:
 
-la gestion de sources dans dbt,
+dbt source configuration
 
-la création de tables (schéma en étoile),
+creation of star schema tables
 
-la construction de vues analytiques (requêtes métier),
+implementation of business queries as dbt views
 
-l’organisation du projet via tags dbt.
+project organization using dbt tags
 
-🧱 Architecture du projet
+🧱 Project Architecture
 
-Le projet respecte une architecture analytique classique :
+The project follows a classic analytical architecture:
 
-1️⃣ Sources (raw / staging)
+1️⃣ Sources (Raw / Staging)
 
-Les données sont chargées depuis S3 vers Snowflake :
-
+Data is loaded from S3 into Snowflake:
 s3://mc-snowflake/sample/music/
 
+The source tables are referenced in schema.yml via dbt sources.
 
-Les tables sources sont référencées dans schema.yml via sources.
+2️⃣ Modeling (Star Schema)
 
-2️⃣ Modélisation (star schema)
+Fact and dimension tables are created using .sql models.
+The modeling is BI-oriented and optimized for analytical queries.
 
-Création des tables fact et dimension via des fichiers .sql
+3️⃣ Consumption (Analytical Views)
 
-Modélisation orientée BI (optimisée pour les requêtes analytiques)
+Exam queries are implemented as dbt views.
+Each view is tagged for targeted execution.
 
-3️⃣ Consommation (vues analytiques)
+📦 Repository Contents
+✅ 1) Source Configuration (schema.yml)
 
-Les requêtes de l’examen sont implémentées en tant que vues dbt
+This file contains:
 
-Chaque vue est taguée pour une exécution ciblée
+source declarations
 
-📦 Contenu du dépôt
-✅ 1) Source configuration (schema.yml)
+table location (database, schema, tables)
 
-Le fichier schema.yml contient :
+optional tests (recommended)
 
-la déclaration des sources
+Objective: connect dbt to Snowflake tables and ensure clear documentation of sources.
 
-la localisation des tables Snowflake (database, schema, tables)
+✅ 2) Models (Star Schema Tables)
 
-les tests optionnels (facultatifs mais recommandés)
-
-📌 Objectif : lier dbt aux tables existantes dans Snowflake et garantir une documentation claire des sources.
-
-✅ 2) Modèles (tables du star schema)
-
-Les modèles sont définis dans le dossier models/ :
+Models are defined in models/:
 
 dim_artist.sql
 
@@ -67,50 +62,50 @@ dim_track.sql
 
 dim_genre.sql
 
-fact_track_play.sql (ou équivalent selon votre modélisation)
+fact_track_play.sql (or equivalent)
 
-📌 Objectif : construire un schéma en étoile prêt pour l’analyse BI.
+Objective: build a star schema optimized for BI analytics.
 
-🔖 Chaque modèle de création de table doit être tagué (ex : tags: ['create_tables']) afin d’éviter la recréation à chaque compilation.
+Each table model must be tagged (e.g., tags: ['create_tables']) to avoid recreating tables on every dbt run.
 
-✅ 3) Vues analytiques (requêtes métier)
+✅ 3) Analytical Views (Business Queries)
 
-Les requêtes de l’examen sont implémentées en tant que vues dbt dans models/analytics/ :
+Exam queries are implemented as dbt views under models/analytics/:
 
-Question	Objectif	Vue
-3.1	Albums avec plus d’un CD	v_albums_multi_cd.sql
-3.2	Morceaux produits en 2000 ou 2002	v_tracks_2000_2002.sql
-3.3	Morceaux Rock & Jazz (nom + compositeur)	v_rock_jazz_composers.sql
-3.4	Top 10 albums les plus longs	v_top10_longest_albums.sql
-3.5	Nombre d’albums par artiste	v_albums_per_artist.sql
-3.6	Nombre de morceaux par artiste	v_tracks_per_artist.sql
-3.7	Genre le plus écouté dans les années 2000	v_top_genre_2000s.sql
-3.8	Playlists avec morceaux > 4 min	v_playlists_long_tracks.sql
-3.9	Rock tracks avec artistes en France	v_rock_tracks_france.sql
-3.10	Moyenne durée des morceaux par genre	v_avg_track_length_by_genre.sql
-3.11	Playlists avec artistes nés avant 1990	v_playlists_artists_pre1990.sql
+Question	Objective	View
+3.1	Albums with more than one CD	v_albums_multi_cd.sql
+3.2	Tracks produced in 2000 or 2002	v_tracks_2000_2002.sql
+3.3	Rock & Jazz tracks (name + composer)	v_rock_jazz_composers.sql
+3.4	Top 10 longest albums	v_top10_longest_albums.sql
+3.5	Albums per artist	v_albums_per_artist.sql
+3.6	Tracks per artist	v_tracks_per_artist.sql
+3.7	Most listened genre in the 2000s	v_top_genre_2000s.sql
+3.8	Playlists with tracks > 4 minutes	v_playlists_long_tracks.sql
+3.9	Rock tracks with artists based in France	v_rock_tracks_france.sql
+3.10	Average track length by genre	v_avg_track_length_by_genre.sql
+3.11	Playlists with artists born before 1990	v_playlists_artists_pre1990.sql
 
-🔖 Chaque vue est également taguée (ex : tags: ['exam_queries']) pour permettre une exécution ciblée.
+Each view is tagged (e.g., tags: ['exam_queries']) for targeted execution.
 
-🚀 Exécution dbt (recommandée)
-1) Charger les données dans Snowflake
+🚀 dbt Execution (Recommended)
+1) Load data into Snowflake
 
-(Étape préalable si non déjà réalisée)
+(If not already completed)
 
-2) Exécuter dbt avec tags
+2) Run dbt with tags
 
-Pour exécuter uniquement la création des tables :
+To run only table creation:
 
 dbt run --select tag:create_tables
 
 
-Pour exécuter uniquement les vues analytiques :
+To run only analytical views:
 
 dbt run --select tag:exam_queries
 
-🧩 Bonus (optionnel)
+🧩 Optional Bonus
 
-Des tests dbt peuvent être ajoutés pour assurer la qualité des données, par exemple :
+dbt tests can be added to ensure data quality, such as:
 
 not_null
 
@@ -120,14 +115,14 @@ relationships
 
 📌 Conclusion
 
-Ce projet démontre une approche industrielle de transformation SQL vers dbt, en structurant :
+This project demonstrates an industrial approach to migrating SQL workflows into dbt, structuring:
 
-les sources,
+sources
 
-la modélisation,
+modeling
 
-les requêtes métier,
+business queries
 
-et l’exécution via tags.
+execution via tags
 
-Il illustre une capacité à industrialiser un pipeline analytique Snowflake, tout en respectant les bonnes pratiques dbt.
+It highlights the ability to operationalize a Snowflake analytical pipeline while applying dbt best practices
