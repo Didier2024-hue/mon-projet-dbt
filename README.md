@@ -1,10 +1,11 @@
 📘 dbt + Snowflake – Exam Migration Project
 
-DataScientest | Data Engineer / Data Architect
 
 🎯 Context & Objective
 
-This project consists of migrating a Snowflake SQL exam into a dbt workflow, applying best practices for modeling, orchestration, and documentation. The objective is to demonstrate the ability to industrialize a Snowflake analytical pipeline within a dbt framework.
+This project consists of migrating a Snowflake SQL database into a dbt workflow, applying best practices for modeling, orchestration, and documentation. 
+
+The objective is to demonstrate the ability to industrialize a Snowflake analytical pipeline within a dbt framework.
 
 The project covers:
 
