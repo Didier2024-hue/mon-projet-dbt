@@ -1,9 +1,6 @@
-Objet : Compte-rendu technique - Examen dbt interrompu
+Objet : Compte-rendu technique 
 
 Contexte :
-Lors de la phase finale de l'examen dédiée à l'implémentation des vues analytiques via dbt, mon environnement Snowflake a été désactivé de manière imprévue suite à l'expiration de mon compte trial. Voici le bilan détaillé de l'avancement au moment de l'interruption.
-
-Travail réalisé avec succès :
 
 Extraction des données sources depuis DST_DB (complète et validée)
 
@@ -75,10 +72,11 @@ dbt run --select marts.views.* --target dev_star_schema
 Exécute uniquement les vues analytiques.
 
 Remarque :
-L'archive du projet (exam_dbt_JOSEPHINE.tar) inclut l'ensemble du code et des configurations nécessaires pour reproduire l'environnement. Les commandes fournies garantissent une exécution isolée et contrôlée.
+L'archive du projet inclut l'ensemble du code et des configurations nécessaires pour reproduire l'environnement. Les commandes fournies garantissent une exécution isolée et contrôlée.
 
 Pièces jointes :
 
 Archive du projet (fichiers SQL, logs, screenshots)
+
 
 Documentation technique des vues implémentées
