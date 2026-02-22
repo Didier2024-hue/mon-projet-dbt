@@ -1,4 +1,4 @@
-📘 dbt + Snowflake – Exam Migration Project
+📘 dbt + Snowflake – Migration Project
 
 
 🎯 Context & Objective
@@ -87,7 +87,7 @@ Question	Objective	View
 3.10	Average track length by genre	v_avg_track_length_by_genre.sql
 3.11	Playlists with artists born before 1990	v_playlists_artists_pre1990.sql
 
-Each view is tagged (e.g., tags: ['exam_queries']) for targeted execution.
+Each view is tagged (e.g., tags: ['project_queries']) for targeted execution.
 
 🚀 dbt Execution (Recommended)
 1) Load data into Snowflake
